@@ -20,6 +20,8 @@ npm install
 node scrap.js 0x68b3465833fb72a70ecdf485e0e4c7bd8665fc45
 ```
 
+## Information
+
 Script is currently set to analyse hourly trends on a 24 hour timescale but this can be changed to daily/weekly if more applicable using the block timings.
 
 Network is currently set to Ethereum mainnet on line 6. This can be changed if required but alternate networks will need etherscan API support.
@@ -27,3 +29,7 @@ Network is currently set to Ethereum mainnet on line 6. This can be changed if r
 More information at https://jamesbachini.com/defi-growth-metrics/
 
 For further information on Ethers.js check the documentation at: https://docs.ethers.io/
+
+## Screenshot
+
+![Scrap Screenshot](https://jamesbachini.com/wp-content/uploads/2022/03/Screenshot-2022-03-29-143420-scaled.jpg)

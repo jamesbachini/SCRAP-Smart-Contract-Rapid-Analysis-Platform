@@ -25,7 +25,7 @@ const getHistory = async () => {
   const provider = new ethers.providers.EtherscanProvider(network, process.env.ETHERSCAN_API_KEY);
   const currentBlock= await provider.getBlockNumber();
   for (let i = 23; i >= 0; i--) {
-    console.log(`Pulling hourly history ${i+1}/24`);
+    //console.log(`Pulling hourly history ${i+1}/24`);
     const toBlock = currentBlock - (i * 60 * 60 / 4); // 1 hr @ 15 sec blocks
     const fromBlock = currentBlock - ((i + 1) * 60 * 60 / 4); // 2 hr @ 15 sec blocks
     const history = await provider.getHistory(address,fromBlock,toBlock);
@@ -45,17 +45,17 @@ const getHistory = async () => {
     txValues.push(Math.round(txValue));
     uniqueWallets.push(walletCount);
   }
-  console.log(`##############################\n# Hourly Transaction Counts\n`);
+  console.log(`\n#############################################\n# Hourly Transaction Counts\n`);
   console.log (asciichart.plot(txCounter,{ height: 20 }));
-  console.log(`##############################\n# Hourly Transaction Value (ETH)\n`);
+  console.log(`\n#############################################\n# Hourly Transaction Value (ETH)\n`);
   console.log (asciichart.plot(txValues,{ height: 20 }));
-  console.log(`##############################\n# Hourly Unique Wallet Addresses\n`);
+  console.log(`\n#############################################\n# Hourly Unique Wallet Addresses\n`);
   console.log (asciichart.plot(uniqueWallets,{ height: 20 }));
-  console.log(`##############################`);
+  console.log(`\n#############################################`);
   console.log(`# 24hr Total TX Count: ${txCounter.reduce((a, b) => a + b)}`);
   console.log(`# 24hr Transaction Value: ${txValues.reduce((a, b) => a + b)} ETH`);
   console.log(`# 24hr uniqueWallets: ${uniqueWallets.reduce((a, b) => a + b)}`);
-  console.log(`##############################`);
+  console.log(`#############################################`);
   
 }
 
