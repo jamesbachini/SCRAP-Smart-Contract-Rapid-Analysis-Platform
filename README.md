@@ -1,8 +1,10 @@
+```
      _      _ 
    _( )__ _( )__ 
  _|     _|     _|
 (_   _ (_   _ (  SCRAP v 1.03
  |__( )_|__( )_|
+ ```
 
 # SMART CONTRACT RAPID ANALYSIS PLATFORM
 
