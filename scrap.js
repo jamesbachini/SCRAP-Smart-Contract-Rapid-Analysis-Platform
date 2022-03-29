@@ -17,16 +17,17 @@ SMART CONTRACT RAPID ANALYSIS PLATFORM
 Analysing address: ${address}
 `);
 
+
 const getHistory = async () => {
   const txCounter = [];
   const txValues = [];
   const uniqueWallets = [];
   const provider = new ethers.providers.EtherscanProvider(network, process.env.ETHERSCAN_API_KEY);
   const currentBlock= await provider.getBlockNumber();
-  for (let i = 0; i < 7; i++) {
-    console.log(`Pulling day ${i+1} history`);
-    const toBlock = currentBlock - (i * 24 * 60 * 60 / 4); // 1 day @ 15 sec blocks
-    const fromBlock = currentBlock - ((i + 1) * 24 * 60 * 60 / 4); // 2 days @ 15 sec blocks
+  for (let i = 23; i >= 0; i--) {
+    console.log(`Pulling hourly history ${i+1}/24`);
+    const toBlock = currentBlock - (i * 60 * 60 / 4); // 1 hr @ 15 sec blocks
+    const fromBlock = currentBlock - ((i + 1) * 60 * 60 / 4); // 2 hr @ 15 sec blocks
     const history = await provider.getHistory(address,fromBlock,toBlock);
     let txCount = 0;
     let txValue = 0;
@@ -41,15 +42,21 @@ const getHistory = async () => {
       }
     });
     txCounter.push(txCount);
-    txValues.push(txValue);
+    txValues.push(Math.round(txValue));
     uniqueWallets.push(walletCount);
   }
-  console.log(`Daily Transaction Counts`);
-  console.log (asciichart.plot(txCounter));
-  console.log(`Daily Transaction Value (ETH)`);
-  console.log (asciichart.plot(txValues));
-  console.log(`Daily Unique Wallet Addresses`);
-  console.log (asciichart.plot(uniqueWallets));
+  console.log(`##############################\n# Hourly Transaction Counts\n`);
+  console.log (asciichart.plot(txCounter,{ height: 20 }));
+  console.log(`##############################\n# Hourly Transaction Value (ETH)\n`);
+  console.log (asciichart.plot(txValues,{ height: 20 }));
+  console.log(`##############################\n# Hourly Unique Wallet Addresses\n`);
+  console.log (asciichart.plot(uniqueWallets,{ height: 20 }));
+  console.log(`##############################`);
+  console.log(`# 24hr Total TX Count: ${txCounter.reduce((a, b) => a + b)}`);
+  console.log(`# 24hr Transaction Value: ${txValues.reduce((a, b) => a + b)} ETH`);
+  console.log(`# 24hr uniqueWallets: ${uniqueWallets.reduce((a, b) => a + b)}`);
+  console.log(`##############################`);
+  
 }
 
 getHistory();
